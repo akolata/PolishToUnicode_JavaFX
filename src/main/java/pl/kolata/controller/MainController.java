@@ -1,4 +1,88 @@
 package pl.kolata.controller;
 
-public class MainController {
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import pl.kolata.utils.ApplicationDialogs;
+
+public
+    class MainController {
+
+    @FXML
+    private BorderPane borderPane;
+    @FXML
+    private AnchorPane leftAP;
+    @FXML
+    private AnchorPane rightAP;
+    @FXML
+    private TextArea encodedTextTA;
+    @FXML
+    private TextArea rawTextTA;
+    @FXML
+    private Button encodeBTN;
+    @FXML
+    private HBox bottomHBox;
+    @FXML
+    private CheckMenuItem alwaysOnTopCMI;
+
+    @FXML
+    private void initialize(){
+        bindSizeProperties();
+    }
+
+    private void bindSizeProperties() {
+        rawTextTA.prefHeightProperty().bind(leftAP.heightProperty());
+        rawTextTA.prefWidthProperty().bind(leftAP.widthProperty());
+
+        encodedTextTA.prefHeightProperty().bind(rightAP.heightProperty());
+        encodedTextTA.prefWidthProperty().bind(rightAP.widthProperty());
+
+        encodeBTN.prefWidthProperty().bind(bottomHBox.widthProperty());
+    }
+
+    @FXML
+    private void closeApplication(){
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    private void showAboutApplicationDialog(){
+        ApplicationDialogs.displayAboutApplicationDialog();
+    }
+
+    @FXML
+    private void setModena(){
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+    }
+
+    @FXML
+    private void setCaspian(){
+        Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
+    }
+
+    @FXML
+    private void setAlwaysOnTop(){
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        boolean alwaysOnTop = alwaysOnTopCMI.isSelected();
+        stage.setAlwaysOnTop(alwaysOnTop);
+    }
+
+    @FXML
+    private void clearBothSides(){
+        rawTextTA.clear();
+        encodedTextTA.clear();
+    }
+
+    @FXML
+    private void encodeText(){
+    }
+
 }
