@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
+ * Base implementation of Encoder
  * Created by Aleksander on 2017-06-28.
  */
 public
@@ -40,7 +41,15 @@ public
         return "";
     }
 
-    protected Properties loadPropertiesFromResources(String propertiesFileName) throws IOException, NoPropertiesFoundException {
+    /**
+     * Method responsible for loading properties file from main/resources
+     * @param propertiesFileName name of the properties file
+     * @return Properties object created from file
+     * @throws IOException when there was a problem during reading from file
+     * @throws NoPropertiesFoundException when properties cannot be found
+     */
+    protected Properties loadPropertiesFromResources(String propertiesFileName)
+            throws IOException, NoPropertiesFoundException {
 
         Properties properties = new Properties();
         InputStreamReader reader = null;

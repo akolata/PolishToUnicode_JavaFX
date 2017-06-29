@@ -17,6 +17,9 @@ import pl.kolata.utils.ApplicationDialogs;
 
 import java.io.IOException;
 
+/**
+ * Controller used with main application window
+ */
 public
     class MainController {
 
@@ -40,6 +43,9 @@ public
     private Encoder polishTextEncoder;
     private boolean isPropertiesFileLoaded = true;
 
+    /**
+     * Default constructor for controller. Initializes implementation of current language encoder
+     */
     public MainController(){
         try {
             polishTextEncoder = new PolishToUnicodeEncoder();
@@ -52,11 +58,22 @@ public
     }
 
 
+    /**
+     * Method called after components from FXML will be binded
+     */
     @FXML
     private void initialize(){
         bindSizeProperties();
+
+        if(!isPropertiesFileLoaded){
+            encodeBTN.setDisable(true);
+        }
     }
 
+    /**
+     * Method binds components width and height properties with each other, to make sure layout during
+     * window resize behave well.
+     */
     private void bindSizeProperties() {
         rawTextTA.prefHeightProperty().bind(leftAP.heightProperty());
         rawTextTA.prefWidthProperty().bind(leftAP.widthProperty());
@@ -65,33 +82,44 @@ public
         encodedTextTA.prefWidthProperty().bind(rightAP.widthProperty());
 
         encodeBTN.prefWidthProperty().bind(bottomHBox.widthProperty());
-
-        if(!isPropertiesFileLoaded){
-            encodeBTN.setDisable(true);
-        }
     }
 
+    /**
+     * Closes an application after user will click on menu item
+     */
     @FXML
     private void closeApplication(){
         Platform.exit();
         System.exit(0);
     }
 
+    /**
+     * Calls dialog after after user will click on menu item
+     */
     @FXML
     private void showAboutApplicationDialog(){
         ApplicationDialogs.displayAboutApplicationDialog();
     }
 
+    /**
+     * Changes the application style to Modena
+     */
     @FXML
     private void setModena(){
         Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
     }
 
+    /**
+     * Changes the application style to Caspian
+     */
     @FXML
     private void setCaspian(){
         Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
     }
 
+    /**
+     * Changes the value of alwaysOnTop window property
+     */
     @FXML
     private void setAlwaysOnTop(){
         Stage stage = (Stage) borderPane.getScene().getWindow();
@@ -99,12 +127,18 @@ public
         stage.setAlwaysOnTop(alwaysOnTop);
     }
 
+    /**
+     * Clears both text areas
+     */
     @FXML
     private void clearBothSides(){
         rawTextTA.clear();
         encodedTextTA.clear();
     }
 
+    /**
+     * Shows encoded text in right text area
+     */
     @FXML
     private void encodeText(){
         polishTextEncoder.setTextToEncode(rawTextTA.getText());

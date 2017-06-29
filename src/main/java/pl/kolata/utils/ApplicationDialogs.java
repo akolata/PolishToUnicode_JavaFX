@@ -9,10 +9,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
+ * Class with application dialogs used within application
  * Created by Aleksander on 2017-06-29.
  */
 public class ApplicationDialogs {
 
+    /**
+     * Dialog showing information about application
+     */
     public static void displayAboutApplicationDialog(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -25,6 +29,10 @@ public class ApplicationDialogs {
         alert.showAndWait();
     }
 
+    /**
+     * Exception dialog showed when an exception is thrown
+     * @param exception throwed exception
+     */
     public static void displayExceptionWindow(Exception exception){
         Alert errorWindow = new Alert(Alert.AlertType.ERROR);
 
