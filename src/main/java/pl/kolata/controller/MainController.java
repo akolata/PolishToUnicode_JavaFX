@@ -10,7 +10,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import pl.kolata.encoder.Encoder;
+import pl.kolata.encoder.impl.PolishToUnicodeEncoder;
+import pl.kolata.exception.NoPropertiesFoundException;
 import pl.kolata.utils.ApplicationDialogs;
+
+import java.io.IOException;
 
 public
     class MainController {
@@ -32,6 +37,21 @@ public
     @FXML
     private CheckMenuItem alwaysOnTopCMI;
 
+    private Encoder polishTextEncoder;
+    private boolean isPropertiesFileLoaded = true;
+
+    public MainController(){
+        try {
+            polishTextEncoder = new PolishToUnicodeEncoder();
+        } catch (IOException e1) {
+            Platform.runLater(()-> ApplicationDialogs.displayExceptionWindow(e1));
+        } catch (NoPropertiesFoundException e2) {
+            Platform.runLater(()-> ApplicationDialogs.displayExceptionWindow(e2));
+            isPropertiesFileLoaded = false;
+        }
+    }
+
+
     @FXML
     private void initialize(){
         bindSizeProperties();
@@ -45,6 +65,10 @@ public
         encodedTextTA.prefWidthProperty().bind(rightAP.widthProperty());
 
         encodeBTN.prefWidthProperty().bind(bottomHBox.widthProperty());
+
+        if(!isPropertiesFileLoaded){
+            encodeBTN.setDisable(true);
+        }
     }
 
     @FXML
@@ -83,6 +107,8 @@ public
 
     @FXML
     private void encodeText(){
+        polishTextEncoder.setTextToEncode(rawTextTA.getText());
+        encodedTextTA.setText(polishTextEncoder.encodeText());
     }
 
 }
