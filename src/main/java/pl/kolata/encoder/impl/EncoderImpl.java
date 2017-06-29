@@ -27,8 +27,8 @@ public
     }
 
     @Override
-    public String getCharacterUnicodeCode(char character) {
-        return characterReplacements.getProperty(String.valueOf(character));
+    public String getCharacterUnicodeCode(String character) {
+        return characterReplacements.getProperty(character);
     }
 
     @Override

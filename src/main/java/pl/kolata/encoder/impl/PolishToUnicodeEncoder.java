@@ -24,7 +24,7 @@ public
 
         for(String character : characterReplacements.stringPropertyNames()){
             textToEncode = textToEncode.replace(character,
-                    UNICODE_SUFFIX + characterReplacements.getProperty(character));
+                    UNICODE_SUFFIX + getCharacterUnicodeCode(character));
         }
 
         return textToEncode;
